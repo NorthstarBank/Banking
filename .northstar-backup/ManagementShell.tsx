@@ -10,7 +10,6 @@ import {
   Menu,
   ReceiptText,
   ShieldCheck,
-  UserCog,
   Users,
   X,
 } from 'lucide-react'
@@ -25,12 +24,7 @@ interface ManagementShellProps {
   children: ReactNode
 }
 
-const navigation: Array<{
-  label: string
-  href: string
-  icon: typeof LayoutDashboard
-  superManagerOnly?: boolean
-}> = [
+const navigation = [
   {
     label: 'Dashboard',
     href: '/management',
@@ -71,12 +65,6 @@ const navigation: Array<{
     href: '/management/audit',
     icon: FileClock,
   },
-  {
-    label: 'Staff Control',
-    href: '/management/staff',
-    icon: UserCog,
-    superManagerOnly: true,
-  },
 ]
 
 export function ManagementShell({
@@ -104,13 +92,7 @@ export function ManagementShell({
           <BrandMark />
           <div>
             <strong>NorthStarBank</strong>
-            <span>
-              {customer.role === 'super_manager'
-                ? 'Super Manager'
-                : customer.role === 'developer'
-                  ? 'Developer'
-                  : 'Management'}
-            </span>
+            <span>Management</span>
           </div>
           <button
             className="management-shell__close"
@@ -127,16 +109,10 @@ export function ManagementShell({
         </div>
 
         <nav className="management-shell__nav">
-          {navigation
-            .filter(
-              (item) =>
-                !item.superManagerOnly ||
-                customer.role === 'super_manager',
-            )
-            .map((item) => {
-              const Icon = item.icon
+          {navigation.map((item) => {
+            const Icon = item.icon
 
-              return (
+            return (
               <NavLink
                 key={item.href}
                 to={item.href}
